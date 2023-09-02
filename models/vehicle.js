@@ -10,7 +10,7 @@ const VehicleSchema = new Schema({
     condition: { type: String, enum: ['new', 'used'], required: true },
     milage: { type: Number, max: 2000000, required: true },
     summary: { type: String },
-    price: { type: Number, required: true },
+    price: { type: Number, required: true, min: 500 },
     color: { type: String, maxLength: 100 },
 });
 
