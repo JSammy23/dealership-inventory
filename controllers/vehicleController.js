@@ -1,9 +1,22 @@
 const Vehicle = require('../models/vehicle');
+const Make = require('../models/make');
+const Category = require('../models/category');
 
 const asyncHandler = require("express-async-handler");
 
 exports.index = asyncHandler(async (req, res, next) => {
-    res.send("Not Implemented: Inventory Count")
+    const [numVehicles, numMakes, numCategory] = await Promise.all([
+        Vehicle.countDocuments({}).exec(),
+        Make.countDocuments({}).exec(),
+        Category.countDocuments({}).exec()
+    ]);
+
+    res.render('index', {
+        title: "Dealership Inventory",
+        vehicle_count: numVehicles,
+        make_count: numMakes,
+        category_count: numCategory,
+    });
 });
 
 exports.vehicle_create_get = asyncHandler(async (req, res, next) => {
