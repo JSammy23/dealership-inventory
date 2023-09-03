@@ -3,6 +3,7 @@ const router = express.Router();
 
 // Require controller modules
 const vehicleController = require('../controllers/vehicleController');
+const makeController = require('../controllers/makeController');
 
 /// VEHCILE ROUTES ///
 
@@ -32,5 +33,28 @@ router.get("/vehicle/:id", vehicleController.vehicle_detail);
 
 // GET request for list of all vehicle items.
 router.get("/vehicles", vehicleController.vehicle_list);
+
+/// Make Routes ///
+
+// GET request for list of all makes.
+router.get('/makes', makeController.make_list);
+
+// GET request to create make
+router.get('/make/create', makeController.make_create_get);
+
+// POST request to create make
+router.post('/make/create', makeController.make_create_post);
+
+// GET request to delete make
+router.get('/make/:id/delete', makeController.make_delete_get);
+
+// POST request for deleting make.
+router.post('/make/:id/delete', makeController.make_delete_post);
+
+// GET request to update make.
+router.get("/make/:id/update", makeController.make_update_get);
+
+// POST request to update make.
+router.post("/make/:id/update", makeController.make_update_post);
 
 module.exports = router;
