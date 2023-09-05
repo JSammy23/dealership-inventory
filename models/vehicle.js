@@ -5,7 +5,7 @@ const VehicleSchema = new Schema({
     year: { type: Number, required: true, min: 1900, max: 2030 },
     make: { type: Schema.Types.ObjectId, ref: 'Make', required: true, maxLength: 100 },
     model: { type: String, required: true, maxLength: 100 },
-    category: { type: Schema.Types.ObjectId, ref: 'category', required: true },
+    category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
     vin: { type: String, maxLength: 30 },
     condition: { type: String, enum: ['new', 'used'], required: true },
     milage: { type: Number, max: 2000000, required: true },
