@@ -1,4 +1,5 @@
 const Make = require('../models/make');
+const Vehicle = require('../models/vehicle');
 const asyncHandler = require('express-async-handler');
 
 exports.make_list = asyncHandler(async (req, res, next) => {
@@ -11,11 +12,15 @@ exports.make_list = asyncHandler(async (req, res, next) => {
 });
 
 exports.make_detail = asyncHandler(async (req, res, next) => {
-    const make = await Make.findById(req.params.id).exec();
+    const [make, vehicleByMake] = await Promise.all([
+        Make.findById(req.params.id),
+        Vehicle.find({ make: req.params.id })
+    ]);
 
     res.render('make_detail', {
         title: 'Make Details',
-        make: make
+        make: make,
+        vehicle_list: vehicleByMake
     });
 });
 
