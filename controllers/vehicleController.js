@@ -1,6 +1,7 @@
 const Vehicle = require('../models/vehicle');
 const Make = require('../models/make');
 const Category = require('../models/category');
+const { body, validationResult } = require("express-validator");
 
 const asyncHandler = require("express-async-handler");
 
@@ -20,12 +21,105 @@ exports.index = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicle_create_get = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Create vehicle GET');
+    const [allMakes, allCategories] = await Promise.all([
+        Make.find({}).exec(),
+        Category.find({}).exec()
+    ]);
+
+    res.render('vehicle_form', {
+        title: 'Create New Vehicle',
+        make_list: allMakes,
+        category_list: allCategories,
+        vehicle: null,
+        errors: []
+    });
 });
 
-exports.vehicle_create_post = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Create vehicle POST');
-});
+exports.vehicle_create_post = [
+    // Validate & sanitize fields
+    body('make', 'Make must be selected.')
+        .trim()
+        .escape()
+        .notEmpty(),
+    body('category', 'Category must be selected.')
+        .trim()
+        .escape()
+        .notEmpty(),
+    body('year', 'Year must be entered.')
+        .trim()
+        .isLength({ min: 4 })
+        .isNumeric()
+        .escape(),
+    body('model', "Model must be entered.")
+        .trim()
+        .isLength({ min: 4 })
+        .escape(),
+    body('vin')
+        .if(body('vin').exists({ checkFalsy: true }))
+        .trim()
+        .escape(),
+    body('milage', 'Milage must be entered.')
+        .trim()
+        .isLength({ min: 1 })
+        .isNumeric()
+        .escape(),
+    body('summary', 'Summary must not be empty.')
+        .trim()
+        .notEmpty()
+        .escape(),
+    body('price', 'Price must be entered.')
+        .trim()
+        .isNumeric()
+        .isLength({ min: 3 })
+        .escape(),
+    body('color', "Color must be entered.")
+        .trim()
+        .isAlphanumeric()
+        .notEmpty()
+        .escape(),
+    body('condition', 'Condition must be selected.')
+        .trim()
+        .notEmpty()
+        .escape(),
+    
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+
+        const vehicle = new Vehicle({
+            year: req.body.year,
+            make: req.body.make,
+            model: req.body.model,
+            category: req.body.category,
+            vin: req.body.vin,
+            condition: req.body.condition,
+            milage: req.body.milage,
+            summary: req.body.summary,
+            price: req.body.price,
+            color: req.body.color
+        });
+
+        if (!errors.isEmpty()) {
+            // There are errors, render form again with sanitized values & errors.
+            // Grab makes and categories
+            const [allMakes, allCategories] = await Promise.all([
+                Make.find({}).exec(),
+                Category.find({}).exec()
+            ]);
+
+            res.render('vehicle_form', {
+                title: 'Create New Vehicle',
+                make_list: allMakes,
+                category_list: allCategories,
+                vehicle: vehicle,
+                errors: errors.array()
+            });
+        } else {
+            await vehicle.save();
+            res.redirect(vehicle.url);
+        }
+    })
+        
+];
 
 exports.vehicle_delete_get = asyncHandler(async (req, res, next) => {
     res.send('Not Implemented: Delete vehicle GET');
