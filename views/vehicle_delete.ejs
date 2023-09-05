@@ -1,0 +1,11 @@
+<h1><%= title %></h1>
+<h2><%= vehicle.make.name %> <%= vehicle.model %></h2>
+<p><strong>Vin:</strong> <%= vehicle.vin %></p>
+<p>Do you really want to delete this vehicle?</p>
+
+<form action="" method="post">
+    <div class="form-group">
+        <input type="hidden" id="vehicleid" class="form-control" name="vehicleid" required value="<%= vehicle._id %>" >
+    </div>
+    <button class="btn btn-primary" type="submit" >Delete</button>
+</form>

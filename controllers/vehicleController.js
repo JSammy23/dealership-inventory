@@ -122,11 +122,26 @@ exports.vehicle_create_post = [
 ];
 
 exports.vehicle_delete_get = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Delete vehicle GET');
+    const vehicle = await Vehicle.findById(req.params.id).populate('make category').exec();
+
+    if (vehicle === null) {
+        const err = new Error('Vehicle not found!');
+        err.status = 404;
+        return next(err);
+    };
+
+    res.render('vehicle_delete', {
+        title: 'Delete Vehicle',
+        vehicle: vehicle,
+        errors: []
+    });
 });
 
 exports.vehicle_delete_post = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Delete vehicle POST');
+    const vehicle = await Vehicle.findById(req.params.id).populate('make category').exec();
+
+    await Vehicle.findByIdAndRemove(req.body.vehicleid);
+    res.redirect('/catalog/vehicles');
 });
 
 exports.vehicle_update_get = asyncHandler(async (req, res, next) => {
