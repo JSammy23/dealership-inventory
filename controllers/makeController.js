@@ -2,7 +2,12 @@ const Make = require('../models/make');
 const asyncHandler = require('express-async-handler');
 
 exports.make_list = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Makes List');
+    const allMakes = await Make.find({}).exec();
+
+    res.render('make_list', {
+        title: 'All Makes',
+        make_list: allMakes
+    });
 });
 
 exports.make_create_get = asyncHandler(async (req, res, next) => {
