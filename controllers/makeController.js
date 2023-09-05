@@ -10,6 +10,15 @@ exports.make_list = asyncHandler(async (req, res, next) => {
     });
 });
 
+exports.make_detail = asyncHandler(async (req, res, next) => {
+    const make = await Make.findById(req.params.id).exec();
+
+    res.render('make_detail', {
+        title: 'Make Details',
+        make: make
+    });
+});
+
 exports.make_create_get = asyncHandler(async (req, res, next) => {
     res.send('Not Implemented: Create Make GET');
 });

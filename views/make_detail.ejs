@@ -1,0 +1,19 @@
+<h1><%= make.name %> Details</h1>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>Country of Origin:</strong> <%= make.origin %></p>
+        </div>
+        <div class="col-md-6">
+            <!-- Assuming that you might have other details to show in the future, this second column is left empty for now. -->
+        </div>
+    </div>
+    
+    <hr>
+    <h3>About <%= make.name %>:</h3>
+    <p><%= make.summary %></p>
+
+    <hr>
+    <a href="/catalog/makes" class="btn btn-primary">Back to Makes</a>
+</div>

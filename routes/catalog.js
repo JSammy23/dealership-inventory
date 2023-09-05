@@ -40,6 +40,9 @@ router.get("/vehicles", vehicleController.vehicle_list);
 // GET request for list of all makes.
 router.get('/makes', makeController.make_list);
 
+// GET request for make detail.
+router.get('/make/:id', makeController.make_detail);
+
 // GET request to create make
 router.get('/make/create', makeController.make_create_get);
 
