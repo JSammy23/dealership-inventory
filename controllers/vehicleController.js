@@ -142,5 +142,10 @@ exports.vehicle_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicle_list = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Vehicle list');
+    const allVehicles = await Vehicle.find({}).populate('make category').exec();
+
+    res.render('vehicle_list', {
+        title: 'All Vehicles',
+        vehicle_list: allVehicles
+    });
 });
