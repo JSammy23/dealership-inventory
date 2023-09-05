@@ -1,0 +1,79 @@
+<h1><%= title %></h1>
+
+<form action="" method="post">
+    <div class="form-group">
+        <label for="make">Make:</label>
+        <select name="make" id="make" class="form-control" required>
+            <% make_list.sort(function(a, b){
+                let textA = a.name.toUpperCase();
+                let textB = b.name.toUpperCase();
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            });
+            for (let make of make_list) { %>
+                <option value="<%= make._id %>" <% if(vehicle && vehicle.make && vehicle.make.equals(make._id)) { %> selected <% } %>><%= make.name %></option>
+            <% } %>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="category">Category:</label>
+        <select name="category" id="category" class="form-control" required>
+            <% category_list.sort(function(a, b){
+                let textA = a.name.toUpperCase();
+                let textB = b.name.toUpperCase();
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            });
+            for (let category of category_list) { %>
+                <option value="<%= category._id %>" <% if(vehicle && vehicle.category && vehicle.category.equals(category._id)) { %> selected <% } %>><%= category.name %></option>
+            <% } %>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="year">Year:</label>
+        <input type="number" name="year" id="year" class="form-control" min="1900" max="2030" value="<%= vehicle ? vehicle.year : '' %>" required>
+    </div>
+
+    <div class="form-group">
+        <label for="model">Model:</label>
+        <input type="text" name="model" id="model" class="form-control" maxLength="100" value="<%= vehicle ? vehicle.model : '' %>" required>
+    </div>
+
+    <div class="form-group">
+        <label for="vin" name="vin" id="vin" >Vin: </label>  
+        <input type="text" id="vin" name="vin" maxLength="30" value="<%= vehicle ? vehicle.vin : '' %>" class="form-control">  
+    </div>
+
+    <div class="form-group">
+        <label for="milage" name="milage" id="milage" >Milage: </label>  
+        <input type="number" id="milage" name="milage" value="<%= vehicle ? vehicle.milage : '' %>" class="form-control">  
+    </div>
+
+    <div class="form-group">
+        <label for="summary" name="summary" id="summary" >Summary: </label>  
+        <input type="text" id="summary" name="summary" value="<%= vehicle ? vehicle.summary : '' %>" class="form-control">  
+    </div>
+
+    <div class="form-group">
+        <label for="price" name="price" id="price" >Price: </label>  
+        <input type="number" id="price" name="price" value="<%= vehicle ? vehicle.price : '' %>" class="form-control"> 
+    </div>
+
+    <div class="form-group">
+        <label for="color" name="color" id="color" >Color: </label>  
+        <input type="text" id="color" name="color" value="<%= vehicle ? vehicle.color : '' %>" class="form-control">  
+    </div>
+
+    <div class="form-group">
+    <label for="condition">Condition:</label>
+    <select name="condition" id="condition">
+        <option value="new" <% if(vehicle && vehicle.condition === 'new') { %> selected <% } %>>New</option>
+        <option value="used" <% if(vehicle && vehicle.condition === 'used') { %> selected <% } %>>Used</option>
+    </select>
+</div>
+
+
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary">
+    </div>
+</form>
