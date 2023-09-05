@@ -5,7 +5,7 @@
             <ul>
                 <% make_list.forEach(make => { %>
                     <li>
-                        <%= make.name %> <!-- Assuming each make object has a name property -->
+                        <a href="<%= make.url %>"> <%= make.name %></a>
                     </li>
                 <% }) %>
             </ul>
