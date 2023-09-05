@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+});
+
 const VehicleSchema = new Schema({
     year: { type: Number, required: true, min: 1900, max: 2030 },
     make: { type: Schema.Types.ObjectId, ref: 'Make', required: true, maxLength: 100 },
@@ -22,6 +27,11 @@ VehicleSchema.virtual('url').get(function () {
 // Virtual for vehicle title
 VehicleSchema.virtual('title').get(function () {
     return `${this.make} ${this.model}`;
+});
+
+// Virtual for formatted price
+VehicleSchema.virtual('formatted_price').get(function () {
+    return formatter.format(this.price);
 });
 
 module.exports = mongoose.model('Vehicle', VehicleSchema);

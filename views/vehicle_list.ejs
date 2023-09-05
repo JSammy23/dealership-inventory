@@ -14,7 +14,7 @@
                 <p><strong>Condition:</strong> <%= vehicle.condition %></p>
                 <p><strong>Milage:</strong> <%= vehicle.milage %></p>
                 <p><strong>Summary:</strong> <%= vehicle.summary ? vehicle.summary : 'N/A' %></p>
-                <p><strong>Price:</strong> $<%= vehicle.price %></p>
+                <p><strong>Price:</strong> <%= vehicle.formatted_price %></p>
                 <p><strong>Color:</strong> <%= vehicle.color %></p>
             </div>
         <% } %>
