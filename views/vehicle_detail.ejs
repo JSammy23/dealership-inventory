@@ -12,7 +12,7 @@
         <!-- First Column -->
         <div class="col-md-6">
             <p><strong>Year:</strong> <%= vehicle.year %></p>
-            <p><strong>Category:</strong> <%= vehicle.category.name %></p> <!-- Assuming category has a name or similar field when populated -->
+            <p><strong>Category:</strong> <%= vehicle.category.name %></p> 
             <p><strong>VIN:</strong> <%= vehicle.vin ? vehicle.vin : 'N/A' %></p>
             <p><strong>Condition:</strong> <%= vehicle.condition %></p>
         </div>
@@ -20,7 +20,7 @@
         <!-- Second Column -->
         <div class="col-md-6">
             <p><strong>Milage:</strong> <%= vehicle.milage %></p>
-            <p><strong>Price:</strong> <%= vehicle.formatted_price %></p> <!-- Assuming you've formatted the price -->
+            <p><strong>Price:</strong> <%= vehicle.formatted_price %></p> 
             <p><strong>Color:</strong> <%= vehicle.color %></p>
         </div>
     </div>
@@ -32,4 +32,12 @@
             <p><%= vehicle.summary ? vehicle.summary : 'No summary available.' %></p>
         </div>
     </div>
+
+    <hr>
+    <p>
+        <a href="<%= vehicle.url %>/update">Update vehicle</a>
+    </p>
+    <p>
+        <a href="<%= vehicle.url %>/delete">Delete vehicle</a>
+    </p>
 </div>
