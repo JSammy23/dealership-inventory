@@ -4,6 +4,7 @@ const router = express.Router();
 // Require controller modules
 const vehicleController = require('../controllers/vehicleController');
 const makeController = require('../controllers/makeController');
+const categoryController = require('../controllers/categoryController');
 
 /// VEHCILE ROUTES ///
 
@@ -56,5 +57,28 @@ router.get("/make/:id/update", makeController.make_update_get);
 
 // POST request to update make.
 router.post("/make/:id/update", makeController.make_update_post);
+
+/// Category Routes ///
+
+// GET request for list of all categories
+router.get('/categories', categoryController.category_list);
+
+// GET request to create category
+router.get('/category/create', categoryController.category_create_get);
+
+// POST request to create category
+router.post('/category/create', categoryController.category_create_post);
+
+// GET request to delete category
+router.get('/category/:id/delete', categoryController.category_delete_get);
+
+// POST request for deleting category.
+router.post('/category/:id/delete', categoryController.category_delete_post);
+
+// GET request to update category.
+router.get("/category/:id/update", categoryController.category_update_get);
+
+// POST request to update category.
+router.post("/category/:id/update", categoryController.category_update_post);
 
 module.exports = router;
