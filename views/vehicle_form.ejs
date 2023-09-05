@@ -77,3 +77,11 @@
         <input type="submit" value="Submit" class="btn btn-primary">
     </div>
 </form>
+
+<% if (errors) { %>
+  <ul>
+    <% errors.forEach(function(error) { %>
+      <li><%= error.msg %></li>
+    <% }); %>
+  </ul>
+<% } %>
