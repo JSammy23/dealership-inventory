@@ -1,0 +1,22 @@
+<div class="container">
+    <h1 class="my-4"><%= title %></h1>
+
+    <p>All vehicles in our inventory are listed below:</p>
+
+    <div class="list-group">
+        <% for (let vehicle of vehicle_list) { %>
+            <div class="list-group-item">
+                <h4 class="mb-2"><%= vehicle.make.name %> <%= vehicle.model %></h4>
+
+                <p><strong>Year:</strong> <%= vehicle.year %></p>
+                <p><strong>Category:</strong> <%= vehicle.category.name %></p> <!-- Assuming category has a name or similar field when populated -->
+                <p><strong>VIN:</strong> <%= vehicle.vin ? vehicle.vin : 'N/A' %></p>
+                <p><strong>Condition:</strong> <%= vehicle.condition %></p>
+                <p><strong>Milage:</strong> <%= vehicle.milage %></p>
+                <p><strong>Summary:</strong> <%= vehicle.summary ? vehicle.summary : 'N/A' %></p>
+                <p><strong>Price:</strong> $<%= vehicle.price %></p>
+                <p><strong>Color:</strong> <%= vehicle.color %></p>
+            </div>
+        <% } %>
+    </div>
+</div>
