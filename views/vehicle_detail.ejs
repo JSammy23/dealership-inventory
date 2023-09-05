@@ -1,0 +1,35 @@
+<div class="container mt-5">
+    <!-- Vehicle Details Header -->
+    <div class="row mb-4">
+        <div class="col">
+            <h1><%= title %></h1>
+            <h2><%= vehicle.make.name %> <%= vehicle.model %></h2>
+        </div>
+    </div>
+
+    <!-- Vehicle Info Columns -->
+    <div class="row mb-4">
+        <!-- First Column -->
+        <div class="col-md-6">
+            <p><strong>Year:</strong> <%= vehicle.year %></p>
+            <p><strong>Category:</strong> <%= vehicle.category.name %></p> <!-- Assuming category has a name or similar field when populated -->
+            <p><strong>VIN:</strong> <%= vehicle.vin ? vehicle.vin : 'N/A' %></p>
+            <p><strong>Condition:</strong> <%= vehicle.condition %></p>
+        </div>
+
+        <!-- Second Column -->
+        <div class="col-md-6">
+            <p><strong>Milage:</strong> <%= vehicle.milage %></p>
+            <p><strong>Price:</strong> <%= vehicle.formatted_price %></p> <!-- Assuming you've formatted the price -->
+            <p><strong>Color:</strong> <%= vehicle.color %></p>
+        </div>
+    </div>
+
+    <!-- Vehicle Summary -->
+    <div class="row">
+        <div class="col">
+            <h4>Summary:</h4>
+            <p><%= vehicle.summary ? vehicle.summary : 'No summary available.' %></p>
+        </div>
+    </div>
+</div>
