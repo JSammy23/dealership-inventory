@@ -1,0 +1,16 @@
+<h2><%= title %></h2>
+<div class="row">
+    <div class="col">
+        <% if(category_list && category_list.length > 0) { %>
+            <ul>
+                <% category_list.forEach(category => { %>
+                    <li>
+                        <%= category.name %> <!-- Assuming each category object has a name property -->
+                    </li>
+                <% }) %>
+            </ul>
+        <% } else { %>
+            <p>No categories available.</p>
+        <% } %>
+    </div>
+</div>
