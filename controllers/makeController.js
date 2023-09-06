@@ -114,9 +114,50 @@ exports.make_delete_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.make_update_get = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Update Make GET');
+    const make = await Make.findById(req.params.id);
+
+    res.render('make_form', {
+        title: 'Update Make',
+        make: make,
+        errors: []
+    });
 });
 
-exports.make_update_post = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Update Make POST');
-});
+exports.make_update_post = [
+    body('name', 'Name must be entered.')
+        .trim()
+        .isAlphanumeric()
+        .escape()
+        .customSanitizer(value => {
+            return value.charAt(0).toUpperCase() + value.slice(1);
+        }),
+    body('origin', 'Please enter country of origin.')
+        .trim()
+        .isAlphanumeric()
+        .escape(),
+    body('summary', 'Please enter a brief summary.')
+        .trim()
+        .escape(),
+
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+        const make = new Make({
+            name: req.body.name,
+            origin: req.body.origin,
+            summary: req.body.summary,
+            _id: req.params.id
+        });
+
+        if (!errors.isEmpty()) {
+            // There are errors, render form again with sanitized values & errors.
+            res.render('make_form', {
+                title: 'Update Make',
+                make: make,
+                errors: errors.array()
+            });
+        } else {
+            const result = await Make.findByIdAndUpdate(req.params.id, make, {});
+            res.redirect(make.url);
+        }
+    })
+]
