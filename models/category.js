@@ -5,4 +5,8 @@ const CategorySchema = new Schema({
     name: { type: String, required: true, enum: ['Truck', 'Sedan', 'Coupe', 'Convertible', 'Commercial'] }
 });
 
+CategorySchema.virtual('url').get(function () {
+    return `/catalog/category/${this._id}`;
+});
+
 module.exports = mongoose.model('Category', CategorySchema);
