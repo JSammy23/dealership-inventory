@@ -1,0 +1,23 @@
+<h1><%= title %></h1>
+
+<form action="" method="post">
+    <!-- For Make Name -->
+    <div class="form-group">
+        <label for="name">Make Name:</label>
+        <input type="text" id="name" name="name" class="form-control" value="<%= make ? make.name : '' %>" required maxlength="100">
+    </div>
+
+    <!-- For Origin -->
+    <div class="form-group">
+        <label for="origin">Country of Origin:</label>
+        <input type="text" id="origin" class="form-control" name="origin" value="<%= make ? make.origin : '' %>" required maxlength="100">
+    </div>
+
+    <!-- For Summary -->
+    <div class="form-group">
+        <label for="summary">Summary:</label>
+        <textarea id="summary" class="form-control" name="summary"><%= make ? make.summary : '' %></textarea>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>

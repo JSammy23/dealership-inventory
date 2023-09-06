@@ -1,6 +1,7 @@
 const Make = require('../models/make');
 const Vehicle = require('../models/vehicle');
 const asyncHandler = require('express-async-handler');
+const { body, validationResult } = require("express-validator");
 
 exports.make_list = asyncHandler(async (req, res, next) => {
     const allMakes = await Make.find({}).exec();
@@ -25,12 +26,51 @@ exports.make_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.make_create_get = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Create Make GET');
+    res.render('make_form', {
+        title: 'Add new Make',
+        make: null,
+        errors: []
+    });
 });
 
-exports.make_create_post = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Create Make POST');
-});
+exports.make_create_post = [
+    body('name', 'Name must be entered.')
+        .trim()
+        .isAlphanumeric()
+        .escape()
+        .customSanitizer(value => {
+            return value.charAt(0).toUpperCase() + value.slice(1);
+        }),
+    body('origin', 'Please enter country of origin.')
+        .trim()
+        .isAlphanumeric()
+        .escape(),
+    body('summary', 'Please enter a brief summary.')
+        .trim()
+        .escape(),
+
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+        const make = new Make({
+            name: req.body.name,
+            origin: req.body.origin,
+            summary: req.body.summary,
+            _id: req.params.id
+        });
+
+        if (!errors.isEmpty()) {
+            // There are errors, render form again with sanitized values & errors.
+            res.render('make_form', {
+                title: 'Add new Make',
+                make: make,
+                errors: errors.array()
+            });
+        } else {
+            await make.save();
+            res.redirect(make.url);
+        }
+    })
+]
 
 exports.make_delete_get = asyncHandler(async (req, res, next) => {
     res.send('Not Implemented: Delete Make GET');
