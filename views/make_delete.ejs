@@ -1,0 +1,21 @@
+<h1><%= title %></h1>
+
+<% if (vehicle_list.length > 0) { %>
+    <p>The following vehicles must be removed from inventory before attmepting to delete this make:</p>
+    <dl>
+        <% vehicle_list.forEach(function(vehicle) { %>
+            <dt>
+                <a href="<%= vehicle.url %>"><%= vehicle.model %></a>
+            </dt>
+            <dd><strong>Vin: </strong><%= vehicle.vin %></dd>
+        <% }); %>
+    </dl>
+<% } else { %>
+    <p>Do you really want to delete this make?</p>
+    <form action="" method="post">
+        <div class="form-group">
+            <input type="hidden" id="makeid" class="form-control" name="makeid" required value="<%= make._id %>" >
+        </div>
+        <button class="btn btn-primary" type="submit" >Delete</button>
+    </form>
+    <% }; %>

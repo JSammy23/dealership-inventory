@@ -73,11 +73,44 @@ exports.make_create_post = [
 ]
 
 exports.make_delete_get = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Delete Make GET');
+    const [make, vehiclesByMake] = await Promise.all([
+        Make.findById(req.params.id).exec(),
+        Vehicle.find({ make: req.params.id }).exec()
+    ]);
+
+    if (make === null) {
+        const err = new Error('Make not found');
+        err.status = 404;
+        return next(err);
+    };
+
+    res.render('make_delete', {
+        title: 'Delete Make',
+        make: make,
+        vehicle_list: vehiclesByMake,
+        errors: []
+    });
+
 });
 
 exports.make_delete_post = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Delete Make POST');
+    const [make, vehiclesByMake] = await Promise.all([
+        Make.findById(req.params.id).exec(),
+        Vehicle.find({ make: req.params.id }).exec()
+    ]);
+
+    if (vehiclesByMake.length > 0) {
+        // Make has vehicles in stock that must be deleted first.
+        res.render('make_delete', {
+            title: 'Delete Make',
+            make: make,
+            vehicle_list: vehiclesByMake,
+            errors: []
+        });
+    } else {
+        await Make.findByIdAndRemove(req.body.makeid);
+        res.redirect('/catalog/makes');
+    }
 });
 
 exports.make_update_get = asyncHandler(async (req, res, next) => {
