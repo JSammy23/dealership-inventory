@@ -74,12 +74,18 @@ exports.vehicle_create_post = [
         .escape(),
     body('color', "Color must be entered.")
         .trim()
-        .isAlphanumeric()
+        .matches(/^[a-zA-Z\s]*$/)
         .notEmpty()
+        .customSanitizer(value => {
+            return value.charAt(0).toUpperCase() + value.slice(1);
+        })
         .escape(),
     body('condition', 'Condition must be selected.')
         .trim()
         .notEmpty()
+        .customSanitizer(value => {
+            return value.charAt(0).toUpperCase() + value.slice(1);
+        })
         .escape(),
     
     asyncHandler(async (req, res, next) => {
