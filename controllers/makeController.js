@@ -13,8 +13,8 @@ exports.make_list = asyncHandler(async (req, res, next) => {
 
 exports.make_detail = asyncHandler(async (req, res, next) => {
     const [make, vehicleByMake] = await Promise.all([
-        Make.findById(req.params.id),
-        Vehicle.find({ make: req.params.id })
+        Make.findById(req.params.id).exec(),
+        Vehicle.find({ make: req.params.id }).populate('category').exec()
     ]);
 
     res.render('make_detail', {
