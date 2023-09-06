@@ -5,7 +5,7 @@
             <ul>
                 <% category_list.forEach(category => { %>
                     <li>
-                        <%= category.name %> <!-- Assuming each category object has a name property -->
+                         <a href="<%= category.url %>"><%= category.name %></a>
                     </li>
                 <% }) %>
             </ul>

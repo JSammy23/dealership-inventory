@@ -66,11 +66,15 @@ router.post("/make/:id/update", makeController.make_update_post);
 // GET request for list of all categories
 router.get('/categories', categoryController.category_list);
 
+
 // GET request to create category
 router.get('/category/create', categoryController.category_create_get);
 
 // POST request to create category
 router.post('/category/create', categoryController.category_create_post);
+
+// GET request for category detail
+router.get('/category/:id', categoryController.category_detail);
 
 // GET request to delete category
 router.get('/category/:id/delete', categoryController.category_delete_get);
